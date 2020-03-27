@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { ProfileInfo } from './profile-info'
-
 declare global {
     interface Window { MyNamespace: any; }
 }
@@ -12,9 +10,4 @@ declare global {
 })
 export class AppComponent {
   title = 'profile-app';
-  ngOnInit() {
-    console.log('Hello world!');
-    window["profileInfoData"] = new ProfileInfo();
-  }
-
 }

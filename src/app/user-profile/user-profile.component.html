@@ -11,40 +11,46 @@
 
 <app-header></app-header>
 <br><br>
+
 <div class="row">
   <div class="col-md-4 col-md-border">
+    <div class="card">
     <!-- image  -->
-    <div class="row">
-      <div class="col-md-1"></div>
-      <div class="col-md-2">
-        <img src="/./../placeholder.png" alt="placeholder">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <img src="./../../assets/static/placeholder.png" height="100" width="100" alt="placeholder">
+          </div>
+          <div class="col-md-1"></div>
+        </div>
+
+        <!-- details -->
+        <br><br>
+        <p>Full name <br>
+          {{ name }}
+          <br>
+        <p>Email<br>
+          {{ email }}
+          <br>
+        <p>Mobile<br>
+          {{ mobile }}
+          <br>
+        <p>Address<br>
+          {{ address }}
+
+       </div>
       </div>
-      <div class="col-md-1"></div>
-    </div>
-
-    <!-- details -->
-    <p>Full name <br>
-      -- insert name --
-      <br>
-    <p>Email<br>
-      -- insert email --
-      <br>
-    <p>Mobile<br>
-      -- insert mobile --
-      <br>
-    <p>Address<br>
-      -- insert address --
-
   </div>
 
   <div class="col-md-8">
     <div class="v1"></div>
     <p>About me<br>
-      -- a little bit about me --
+      Hi, my name is {{name}}. Welcome to my profile!
       <br>
     <br>
     <p>I live here<br>
-      <map></map>
+      <app-map></app-map>
 
     
   </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms'
-import { ProfileInfo } from './../profile-info'
 
 @Component({
   selector: 'contact-form',
@@ -39,10 +38,10 @@ profileForm = this.fb.group({
   }
 
   onSubmit(){
-  		this.router.navigateByUrl("/profile");
-  		// console.log(this.profileForm.value);
-  		window["profileInfoObj"].setData(this.profileForm.value);
-  		
+      console.log(this.profileForm.value);
+  		this.router.navigate(["/profile", this.profileForm.value]); 		
    }
 
 }
+
+
