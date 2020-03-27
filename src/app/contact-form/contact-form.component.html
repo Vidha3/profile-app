@@ -1,0 +1,65 @@
+<br><br><br>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-6">
+		    <label for="firstName">First Name</label>
+		    <input id="firstName" type="text" class="form-control" formControlName="firstName">
+			</div>
+	    <div class="col-md-6">
+		    <label for="firstName">Last Name</label>
+		    <input id="lastName" type="text" class="form-control" formControlName="lastName">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+		    <label for="email">Email ID</label>
+		    <input id="emailId" type="text" class="form-control" formControlName="emailId">
+			</div>
+	    <div class="col-md-6">
+		    <label for="website">Website</label>
+		    <input id="website" type="text" class="form-control" formControlName="website">
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-6">
+		    <label for="mobile">Mobile</label>
+		    <input id="mobile" type="text" class="form-control" formControlName="mobile">
+			</div>
+			<!-- Gender radio buttons -->
+	    <div class="col-md-6">
+	    	<br><br>
+	    	Gender&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		    <div class="custom-control custom-radio custom-control-inline">
+				  <input type="radio" id="male" class="custom-control-input" value="male" formControlName="gender">
+				  <label class="custom-control-label" for="male">Male</label>
+				</div>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<div class="custom-control custom-radio custom-control-inline">
+				  <input type="radio" id="female" class="custom-control-input" value="female" formControlName="gender">
+				  <label class="custom-control-label" for="female">Female</label>
+				</div>
+			</div>
+
+		</div>
+		<br>
+
+		<div class="container-fluid">
+	    <div class="form-group">
+	      <label for="address">Address</label>
+	      <textarea class="form-control" id="Address" rows="4" formControlName="address"></textarea>
+	    </div>
+	  </div>
+
+	  <div class="row">
+	  	<div class="col-md-4"></div>
+	  	<div class="col-md-4">
+	  		<button type="submit" class="btn btn-primary btn-block"> Submit </button></div>
+	  	<div class="col-md-4"></div>
+		</div>
+
+
+	</div>
+</form>
