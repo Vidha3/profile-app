@@ -38,7 +38,6 @@ profileForm = this.fb.group({
   }
 
   onSubmit(){
-      console.log(this.profileForm.value);
   		this.router.navigate(["/profile", this.profileForm.value]); 		
    }
 
