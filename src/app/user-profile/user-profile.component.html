@@ -36,7 +36,7 @@
         <p><b><i>Mobile</i></b><br>
           {{ mobile }}
           <br>
-        <p><b><i>Address</i></b><br>
+        <p id="address" class="address"><b><i>Address</i></b><br>
           {{ address }}
 
        </div>
@@ -44,13 +44,13 @@
   </div>
 
   <div class="col-md-8">
-    <div class="v1"></div>
+    <!-- <div class="v1"></div> -->
     <p><b><i>About me</i></b><br>
       Hi, my name is {{name}}. Welcome to my profile!
       <br>
     <br>
     <p><b><i>I live here</i></b><br>
-      <app-map></app-map>
+      <app-map [address]="address"></app-map>
 
     
   </div>
