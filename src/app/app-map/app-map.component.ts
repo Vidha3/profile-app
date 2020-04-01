@@ -8,11 +8,6 @@ import OSM from 'ol/source/OSM';
 import DragPan from 'ol/interaction/DragPan';
 import { fromLonLat } from 'ol/proj';
 
-// my service - not using it
-import { geocodeService } from './../services/geocode.service';
-import {forwardGeocoderResults} from './../classes/forwardGeocoderResults';
-import { Parser } from 'xml2js';
-
 // bunch of npm libraries that didn't work
 // import Geocoder from 'ol-geocoder';
 // import LocationIq from 'locationiq';

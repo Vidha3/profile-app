@@ -10,7 +10,6 @@ import { HeaderComponent } from './app-header/app-header.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MapComponent } from './app-map/app-map.component';
-import { geocodeService } from './services/geocode.service';
 
 
 @NgModule({
@@ -46,7 +45,7 @@ import { geocodeService } from './services/geocode.service';
     ]
     )
   ],
-  providers: [geocodeService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
