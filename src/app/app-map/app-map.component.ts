@@ -6,12 +6,8 @@ import Overlay from 'ol/Overlay';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import DragPan from 'ol/interaction/DragPan';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 
-// bunch of npm libraries that didn't work
-// import Geocoder from 'ol-geocoder';
-// import LocationIq from 'locationiq';
-// import { geocode, reverseGeocode } from 'geocoder';
 
 //HERE service
 import { HereService } from './../here.service';
@@ -32,11 +28,12 @@ export class MapComponent implements OnInit {
 
 
 	map;
+  overlay;
+  view;
 	geocode;
 	coords;
-  coords2 = fromLonLat([-74.01, 40.71]);
-	pnagar = fromLonLat([77.55, 12.91]);
-
+  coordsOnClick;
+	default = fromLonLat([77.55, 12.91]);
   // address = '50 Fairwood Drive, Rochester, NY';
   locations;
   hereCoords = "40.71,-74.01";
@@ -45,18 +42,25 @@ export class MapComponent implements OnInit {
   lng;
   locAddress;
 
-  // constructor(private geocoder: geocodeService) { }
   constructor(private here: HereService) { }
 
 
   ngOnInit(): void {
   	this.initializeMap();
-  	// console.log(locationiq.search('50 Fairwood Drive, Rochester, NY, USA'))
   }
 
   initializeMap(){
-    
 
+    this.overlay = new Overlay({
+          position: this.default,
+          positioning: 'center-center',
+          element: document.getElementById('marker'),
+          stopEvent: false
+        });
+    this.view = new View({
+        center: this.default,
+        zoom: 4
+      });
   	this.map = new Map({
   		target: 'map',
   		interactions: [
@@ -67,21 +71,12 @@ export class MapComponent implements OnInit {
 					      source: new OSM()
 					    })
   						],
-      /**
   		overlays: [
-  			new Overlay({
-  				position: this.coords,
-  				positioning: 'center-center',
-  				element: document.getElementById('marker'),
-  				stopEvent: false
-  			})
+  			this.overlay
   		 ],
        
-  		view: new View({
-  			center: this.coords,
-  			zoom: 4
-  		})
-      */
+  		view: this.view
+      
   	});
     this.getAddress();
     
@@ -99,19 +94,23 @@ export class MapComponent implements OnInit {
 
             this.coords = fromLonLat([this.lng, this.lat]);
 
-            // console.log(this.lat, this.lng);
+            this.overlay.setPosition(this.coords);
+            this.view.setCenter(this.coords);
 
+            /**
             this.map.addOverlay(new Overlay({
               position: this.coords,
               positioning: 'center-center',
               element: document.getElementById('marker'),
               stopEvent: false
             }));
+            
 
             this.map.setView(new View({
               center: this.coords,
               zoom: 4
             }));
+            */
 
 
         }, error => {
@@ -120,11 +119,26 @@ export class MapComponent implements OnInit {
     }
   }
 
-  public getAddressFromLatLng() {
-    if(this.hereCoords != "") {
-        this.here.getAddressFromLatLng(this.hereCoords).then(result => {
-            this.locations = <Array<any>>result;
-            console.log(this.locations);
+  getCoordinates(event: any){
+    this.coordsOnClick = toLonLat(this.map.getEventCoordinate(event));
+    this.hereCoords = String(this.coordsOnClick[1]) + "," + String(this.coordsOnClick[0]);
+    this.getAddressFromLatLng(this.hereCoords);
+  }
+
+  public getAddressFromLatLng(latLon) {
+    if(latLon != "") {
+        this.here.getAddressFromLatLng(latLon).then(result => {
+            this.locations = result[0];
+            this.lat = this.locations.Location.DisplayPosition.Latitude;
+            this.lng = this.locations.Location.DisplayPosition.Longitude;
+            this.locAddress = this.locations.Location.Address;
+
+            this.coords = fromLonLat([this.lng, this.lat]);
+
+            console.log(this.locAddress);
+            this.overlay.setPosition(this.coords);
+            this.view.setCenter(this.coords);
+            
         }, error => {
             console.error(error);
         });
