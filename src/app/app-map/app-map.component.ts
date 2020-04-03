@@ -6,11 +6,13 @@ import Overlay from 'ol/Overlay';
 import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import DragPan from 'ol/interaction/DragPan';
+import PinchZoom from 'ol/interaction/PinchZoom';
+import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { fromLonLat, toLonLat } from 'ol/proj';
 import { User } from './../models/user';
 
 //HERE service
-import { HereService } from './../here.service';
+import { HereService } from './../services/here.service';
 
 // Because we’re working with TypeScript and the HERE API is JavaScript,
 // we need to tell the TypeScript compiler to ignore 
@@ -33,7 +35,7 @@ export class MapComponent implements OnInit {
 	geocode;
 	coords;
   coordsOnClick;
-	default = fromLonLat([77.55, 12.91]);
+	default = fromLonLat([0,0]);
   // address = '50 Fairwood Drive, Rochester, NY';
   locations;
   hereCoords = "40.71,-74.01";
@@ -66,7 +68,9 @@ export class MapComponent implements OnInit {
   	this.map = new Map({
   		target: 'map',
   		interactions: [
-  									new DragPan()
+  									new DragPan(),
+                    new PinchZoom(),
+                    new MouseWheelZoom
   									],
   		layers: [
   						new Tile({
@@ -101,23 +105,10 @@ export class MapComponent implements OnInit {
             this.overlay.setPosition(this.coords);
             this.view.setCenter(this.coords);
 
-            /**
-            this.map.addOverlay(new Overlay({
-              position: this.coords,
-              positioning: 'center-center',
-              element: document.getElementById('marker'),
-              stopEvent: false
-            }));
-            
-
-            this.map.setView(new View({
-              center: this.coords,
-              zoom: 4
-            }));
-            */
-
 
         }, error => {
+            this.user.setAddress("(address entered was invalid, please reenter and submit)");
+
             console.error(error);
         });
     }
@@ -140,12 +131,12 @@ export class MapComponent implements OnInit {
             this.coords = fromLonLat([this.lng, this.lat]);
             this.user.setAddress(this.locAddress.Label);
 
-            console.log(this.locAddress);
+            // console.log(this.locAddress);
             this.overlay.setPosition(this.coords);
             this.view.setCenter(this.coords);
             
         }, error => {
-            console.error(error);
+            // console.error(error);
         });
     }
   }
