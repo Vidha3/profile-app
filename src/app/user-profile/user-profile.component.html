@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-md-1"></div>
           <div class="col-md-2">
-            <img src="./../../assets/static/placeholder.png" height="100" width="100" alt="placeholder">
+            <img src={{user.avatarUrl}} height="100" width="100" alt="placeholder">
           </div>
           <div class="col-md-1"></div>
         </div>
@@ -28,16 +28,16 @@
         <!-- details -->
         <br><br>
         <p><b><i>Full name</i></b><br>
-          {{ name }}
+          {{ user.getFirstName() + " " + user.getLastName() }}
           <br>
         <p><b><i>Email</i></b><br>
-          {{ email }}
+          {{ user.getEmail() }}
           <br>
         <p><b><i>Mobile</i></b><br>
-          {{ mobile }}
+          {{ user.getMobile() }}
           <br>
-        <p id="address" class="address"><b><i>Address</i></b><br>
-          {{ address }}
+        <p><b><i>Address</i></b><br>
+          {{ user.getAddress() }}
 
        </div>
       </div>
@@ -46,11 +46,11 @@
   <div class="col-md-8">
     <!-- <div class="v1"></div> -->
     <p><b><i>About me</i></b><br>
-      Hi, my name is {{name}}. Welcome to my profile!
+      {{ user.getBio() }}
       <br>
     <br>
     <p><b><i>I live here</i></b><br>
-      <app-map [address]="address"></app-map>
+      <app-map [user]="user"></app-map>
 
     
   </div>

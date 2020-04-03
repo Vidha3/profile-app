@@ -7,7 +7,7 @@ import Tile from 'ol/layer/Tile';
 import OSM from 'ol/source/OSM';
 import DragPan from 'ol/interaction/DragPan';
 import { fromLonLat, toLonLat } from 'ol/proj';
-
+import { User } from './../models/user';
 
 //HERE service
 import { HereService } from './../here.service';
@@ -37,7 +37,8 @@ export class MapComponent implements OnInit {
   // address = '50 Fairwood Drive, Rochester, NY';
   locations;
   hereCoords = "40.71,-74.01";
-  @Input('address') address: string;
+  @Input('user') user: User;
+  // address = this.user.getAddress();
   lat;
   lng;
   locAddress;
@@ -46,6 +47,7 @@ export class MapComponent implements OnInit {
 
 
   ngOnInit(): void {
+    // console.log("test " + this.user.getAddress());
   	this.initializeMap();
   }
 
@@ -85,13 +87,15 @@ export class MapComponent implements OnInit {
   //using HERE service
 
   public getAddress() {
-    if(this.address != "") {
-        this.here.getAddress(this.address).then(result => {
+
+    if(this.user.getAddress() != "") {
+        this.here.getAddress(this.user.getAddress()).then(result => {
             this.locations = result[0];
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
             this.locAddress = this.locations.Location.Address;
-
+            // console.log(this.locAddress);
+            this.user.setAddress(this.locAddress.Label);
             this.coords = fromLonLat([this.lng, this.lat]);
 
             this.overlay.setPosition(this.coords);
@@ -132,8 +136,9 @@ export class MapComponent implements OnInit {
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
             this.locAddress = this.locations.Location.Address;
-
+            
             this.coords = fromLonLat([this.lng, this.lat]);
+            this.user.setAddress(this.locAddress.Label);
 
             console.log(this.locAddress);
             this.overlay.setPosition(this.coords);
