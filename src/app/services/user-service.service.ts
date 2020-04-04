@@ -25,13 +25,4 @@ export class UserService {
   	return this.http.get<any>(this.url);
   }
 
-  public getDataFromUrlNot() {
-  	this.http.get(this.url).toPromise().then(data=> {
-  		console.log(data)
-  		this.user.setAvatarUrl(data['avatarUrl']);
-  		this.user.setBio(data['bio']);
-  	})
-
-  }
-
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+
+import { User } from './../models/user';
+
 import Map from 'ol/Map';
-// import Control from 'ol/control/Control';
 import View from 'ol/View';
 import Overlay from 'ol/Overlay';
 import Tile from 'ol/layer/Tile';
@@ -9,7 +11,6 @@ import DragPan from 'ol/interaction/DragPan';
 import PinchZoom from 'ol/interaction/PinchZoom';
 import MouseWheelZoom from 'ol/interaction/MouseWheelZoom';
 import { fromLonLat, toLonLat } from 'ol/proj';
-import { User } from './../models/user';
 
 //HERE service
 import { HereService } from './../services/here.service';
@@ -55,11 +56,12 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log("test " + this.user.getAddress());
   	this.initializeMap();
+    this.getCoordsFromAddress(); 
   }
 
   initializeMap(){
+  // initialize map object
 
     this.overlay = new Overlay({
           position: this.default,
@@ -89,7 +91,6 @@ export class MapComponent implements OnInit {
       
   	});
     
-    this.getCoordsFromAddress(); 
   }
 
   strCoordinates(lat, long){
@@ -118,11 +119,12 @@ export class MapComponent implements OnInit {
             this.locations = result[0];
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
- 
-            // this.user.setAddress(this.getAddressObj(this.locations.Location));
+            
+            // update address field in user model
             this.user.setAddress(this.locations.Location.Address.Label);
+            
+            // adjust view and map marker position as per address
             this.coords = fromLonLat([this.lng, this.lat]);
-
             this.overlay.setPosition(this.coords);
             this.view.setCenter(this.coords);
 
@@ -134,7 +136,7 @@ export class MapComponent implements OnInit {
   }
 
   getCoordinates(event: any){
-    // receives coordinates on double cliok
+    // receives coordinates on double click on the map, calls reverse geocoding
     this.coordsOnClick = toLonLat(this.map.getEventCoordinate(event));
     this.hereCoords = this.strCoordinates(this.coordsOnClick[1], this.coordsOnClick[0])
     this.getAddressFromLatLng(this.hereCoords);
@@ -148,15 +150,17 @@ export class MapComponent implements OnInit {
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
 
-            // this.user.setAddress(this.getAddressObj(this.locations.Location));
+            // update address field in user model
             this.user.setAddress(this.locations.Location.Address.Label);
-            this.coords = fromLonLat([this.lng, this.lat]);
 
+            // adjust view and map marker position as per new address
+            this.coords = fromLonLat([this.lng, this.lat]);
             this.overlay.setPosition(this.coords);
             this.view.setCenter(this.coords);
             
         }, error => {
             // console.error(error);
+            // do nothing
         });
     }
   }

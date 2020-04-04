@@ -33,13 +33,6 @@ export class User {
 		return this.phone;
 	}
 	public getAddress() {
-		/*
-		return this.address.building + " " +
-					this.address.street + ", " +
-					this.address.city + ", " +
-					this.address.state + " " +
-					this.address.zipcode 
-		*/
 		return this.address;
 	}
 	public getAvatarUrl() {
@@ -64,10 +57,6 @@ export class User {
 		this.phone = mobile;
 	}
 	public setAddress(address) {
-		/*
-		address being an object with 
-		keys = building, street, city, state, zipcode, coordinates
-		*/
 		this.address = address;                             
 	}
 	public setAvatarUrl(avatarUrl) {

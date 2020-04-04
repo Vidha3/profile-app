@@ -31,12 +31,10 @@ export class UserProfileComponent implements OnInit {
     this.address = this.route.snapshot.paramMap.get('address');
     this.user = new User(this.firstname, this.lastname, this.email, this.mobile, this.address);
     
-    this.getOtherDetails();
-
-
+    this.getDetailsFromService();
   }
   
-  getOtherDetails() {
+  getDetailsFromService() {
     this.userService.getDataFromUrl()
       .subscribe(data => 
         this.setDetails(data)
@@ -44,10 +42,20 @@ export class UserProfileComponent implements OnInit {
   }
 
   setDetails(data) {
-    this.data = data;
-    console.log(this.data);
-    this.user.setAvatarUrl(this.data.avatarUrl);
-    this.user.setBio(this.data.bio);
+    this.user.setAvatarUrl(data.avatarUrl);
+    this.user.setBio(data.bio);
+
+    // this.user.setAddress(this.strAddress(this.data.address));
+    // this.user.setFirstName(data.firstName);
+    // this.user.setLastName(data.lastName);
+    // this.user.setMobile(data.phone);
+    // this.user.setEmail(data.email);
+  }
+
+  strAddress(address) {
+    return address.building + " " + address.street + ", " +
+            address.city + ", " + address.state + ", " +
+            address.zipcode;
   }
   
 
