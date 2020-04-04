@@ -15,10 +15,9 @@ export class UserProfileComponent implements OnInit {
   lastname: string;
   email: string;
   mobile: string;
-  address;
+  address: string;
   
   user: User;
-  data;
 
   constructor(private route: ActivatedRoute, private userService: UserService) {
   }
@@ -45,6 +44,8 @@ export class UserProfileComponent implements OnInit {
     this.user.setAvatarUrl(data.avatarUrl);
     this.user.setBio(data.bio);
 
+    // uncomment to extract more data from the json service
+
     // this.user.setAddress(this.strAddress(this.data.address));
     // this.user.setFirstName(data.firstName);
     // this.user.setLastName(data.lastName);
@@ -53,6 +54,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   strAddress(address) {
+  // converts address to string form from object
     return address.building + " " + address.street + ", " +
             address.city + ", " + address.state + ", " +
             address.zipcode;

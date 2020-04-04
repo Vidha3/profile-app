@@ -9,36 +9,34 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms'
 })
 
 export class ContactFormComponent implements OnInit {
-/** profileForm = new FormGroup({
-*  firstName: new FormControl(''),
-*  lastName: new FormControl(''),
-*  emailId: new FormControl(''),
-*  website: new FormControl(''),
-*  mobile: new FormControl(''),
-*  gender: new FormControl(''),
-*  address: new FormControl('')
-* });
-*/
 
-profileForm = this.fb.group({
-	firstName: [''],
-	lastName: [''],
-	emailId: [''],
-	website: [''],
-	mobile: [''],
-	gender: [''],
-	address: ['']
-});
+  profileForm: any;
 
   constructor(
   private router: Router, 
   private fb: FormBuilder,) { }
 
   ngOnInit(): void {
+  // TODO: add validation
+  
+    this.profileForm = this.fb.group({
+      firstName: [''],
+      lastName: [''],
+      emailId: [''],
+      website: [''],
+      mobile: [''],
+      gender: [''],
+      address: ['']
+  });
   }
 
   onSubmit(){
-  		this.router.navigate(["/profile", this.profileForm.value]); 		
+      if (this.profileForm.valid){
+        this.router.navigate(["/profile", this.profileForm.value]); 
+      }
+  		else{
+        alert(`Please make sure that your entries are valid`)
+      }
    }
 
 }

@@ -30,9 +30,9 @@ declare var H: any;
 export class MapComponent implements OnInit {
 
   // map
-	map;
-  overlay;
-  view;
+	map: Map;
+  overlay: Overlay;
+  view: View;
 
   // geocode
 	geocode;
@@ -88,29 +88,15 @@ export class MapComponent implements OnInit {
   		overlays: [this.overlay],
        
   		view: this.view
-      
-  	});
-    
+  	});   
   }
 
   strCoordinates(lat, long){
-  // gives "lat,long" in string format
+  // returns "lat,long" in string format
   return String(lat) + "," + String(long);
   }
 
-  getAddressObj(location){
-  // prepares address object for storing in user model
-    return {
-    "building": location.Address.HouseNumber,
-    "street": location.Address.Street,
-    "city": location.Address.City,
-    "state": location.Address.State,
-    "zipcode": location.Address.PostalCode,
-    "coordinates": this.strCoordinates(location.DisplayPosition.Latitude, location.DisplayPosition.Longitude)
-    }
-  }
-
-  // using HERE service for geocoding
+  // using HERE service for geocoding; gets latitude, longitude etc from address
 
   public getCoordsFromAddress() {
 
@@ -137,13 +123,15 @@ export class MapComponent implements OnInit {
 
   getCoordinates(event: any){
     // receives coordinates on double click on the map, calls reverse geocoding
+
     this.coordsOnClick = toLonLat(this.map.getEventCoordinate(event));
     this.hereCoords = this.strCoordinates(this.coordsOnClick[1], this.coordsOnClick[0])
     this.getAddressFromLatLng(this.hereCoords);
   }
 
   public getAddressFromLatLng(latLon) {
-  // reverse geocoding
+  // reverse geocoding; uses latitude,longitude to get address
+
     if(latLon != "") {
         this.here.getAddressFromLatLng(latLon).then(result => {
             this.locations = result[0];

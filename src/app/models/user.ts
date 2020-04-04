@@ -1,9 +1,10 @@
+// user model: domain model which holds all the required information to fill the profile page
+
 export class User {
 	firstName: string;
 	lastName: string;
 	email: string;
 	phone: string;
-	// address: object;
 	address: string;
 	avatarUrl: string;
 	bio: string;
@@ -14,6 +15,7 @@ export class User {
 		this.email = email;
 		this.phone = mobile;
 		this.address = address;
+		// default values for avatar and bio
 		this.avatarUrl = "./../../assets/static/placeholder.png";
 		this.bio = "Hi, my name is " + this.firstName + " " + this.lastName + ". Welcome to my profile!";
 	}
