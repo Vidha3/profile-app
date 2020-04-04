@@ -28,25 +28,31 @@ declare var H: any;
 })
 export class MapComponent implements OnInit {
 
-
+  // map
 	map;
   overlay;
   view;
+
+  // geocode
 	geocode;
+
+  // coords
+  default;
 	coords;
+  hereCoords;
   coordsOnClick;
-	default = fromLonLat([0,0]);
-  // address = '50 Fairwood Drive, Rochester, NY';
+	
+  // location based
   locations;
-  hereCoords = "40.71,-74.01";
-  @Input('user') user: User;
-  // address = this.user.getAddress();
   lat;
   lng;
-  locAddress;
 
-  constructor(private here: HereService) { }
+  // input user domain model
+  @Input('user') user: User;
 
+  constructor(private here: HereService) { 
+    this.default = fromLonLat([0,0]);
+  }
 
   ngOnInit(): void {
     // console.log("test " + this.user.getAddress());
@@ -77,29 +83,44 @@ export class MapComponent implements OnInit {
 					      source: new OSM()
 					    })
   						],
-  		overlays: [
-  			this.overlay
-  		 ],
+  		overlays: [this.overlay],
        
   		view: this.view
       
   	});
-    this.getAddress();
     
+    this.getCoordsFromAddress(); 
   }
 
-  //using HERE service
+  strCoordinates(lat, long){
+  // gives "lat,long" in string format
+  return String(lat) + "," + String(long);
+  }
 
-  public getAddress() {
+  getAddressObj(location){
+  // prepares address object for storing in user model
+    return {
+    "building": location.Address.HouseNumber,
+    "street": location.Address.Street,
+    "city": location.Address.City,
+    "state": location.Address.State,
+    "zipcode": location.Address.PostalCode,
+    "coordinates": this.strCoordinates(location.DisplayPosition.Latitude, location.DisplayPosition.Longitude)
+    }
+  }
+
+  // using HERE service for geocoding
+
+  public getCoordsFromAddress() {
 
     if(this.user.getAddress() != "") {
         this.here.getAddress(this.user.getAddress()).then(result => {
             this.locations = result[0];
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
-            this.locAddress = this.locations.Location.Address;
-            // console.log(this.locAddress);
-            this.user.setAddress(this.locAddress.Label);
+ 
+            // this.user.setAddress(this.getAddressObj(this.locations.Location));
+            this.user.setAddress(this.locations.Location.Address.Label);
             this.coords = fromLonLat([this.lng, this.lat]);
 
             this.overlay.setPosition(this.coords);
@@ -107,31 +128,30 @@ export class MapComponent implements OnInit {
 
 
         }, error => {
-            this.user.setAddress("(address entered was invalid, please reenter and submit)");
-
             console.error(error);
         });
     }
   }
 
   getCoordinates(event: any){
+    // receives coordinates on double cliok
     this.coordsOnClick = toLonLat(this.map.getEventCoordinate(event));
-    this.hereCoords = String(this.coordsOnClick[1]) + "," + String(this.coordsOnClick[0]);
+    this.hereCoords = this.strCoordinates(this.coordsOnClick[1], this.coordsOnClick[0])
     this.getAddressFromLatLng(this.hereCoords);
   }
 
   public getAddressFromLatLng(latLon) {
+  // reverse geocoding
     if(latLon != "") {
         this.here.getAddressFromLatLng(latLon).then(result => {
             this.locations = result[0];
             this.lat = this.locations.Location.DisplayPosition.Latitude;
             this.lng = this.locations.Location.DisplayPosition.Longitude;
-            this.locAddress = this.locations.Location.Address;
-            
-            this.coords = fromLonLat([this.lng, this.lat]);
-            this.user.setAddress(this.locAddress.Label);
 
-            // console.log(this.locAddress);
+            // this.user.setAddress(this.getAddressObj(this.locations.Location));
+            this.user.setAddress(this.locations.Location.Address.Label);
+            this.coords = fromLonLat([this.lng, this.lat]);
+
             this.overlay.setPosition(this.coords);
             this.view.setCenter(this.coords);
             

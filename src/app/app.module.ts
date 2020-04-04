@@ -10,6 +10,7 @@ import { HeaderComponent } from './app-header/app-header.component';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MapComponent } from './app-map/app-map.component';
+import { UserService } from './services/user-service.service'
 
 
 @NgModule({
@@ -45,7 +46,7 @@ import { MapComponent } from './app-map/app-map.component';
     ]
     )
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

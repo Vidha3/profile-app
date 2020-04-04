@@ -2,22 +2,24 @@ export class User {
 	firstName: string;
 	lastName: string;
 	email: string;
-	mobile: string;
+	phone: string;
+	// address: object;
 	address: string;
 	avatarUrl: string;
 	bio: string;
 
 	constructor(firstName, lastName, email, mobile, address){
-	this.firstName = firstName;
-	this.lastName = lastName;
-	this.email = email;
-	this.mobile = mobile;
-	this.address = address;
-	this.avatarUrl = "./../../assets/static/placeholder.png";
-	this.bio = "Hi, my name is " + this.firstName + " " + this.lastName + ". Welcome to my profile!";
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.phone = mobile;
+		this.address = address;
+		this.avatarUrl = "./../../assets/static/placeholder.png";
+		this.bio = "Hi, my name is " + this.firstName + " " + this.lastName + ". Welcome to my profile!";
 	}
 
 	// get functions
+
 	public getFirstName() {
 		return this.firstName;
 	}
@@ -28,9 +30,16 @@ export class User {
 		return this.email;
 	}
 	public getMobile() {
-		return this.mobile;
+		return this.phone;
 	}
 	public getAddress() {
+		/*
+		return this.address.building + " " +
+					this.address.street + ", " +
+					this.address.city + ", " +
+					this.address.state + " " +
+					this.address.zipcode 
+		*/
 		return this.address;
 	}
 	public getAvatarUrl() {
@@ -40,7 +49,7 @@ export class User {
 		return this.bio;
 	}
 
-	// set
+	// set functions
 
 	public setFirstName(firstName) {
 		this.firstName = firstName;
@@ -52,10 +61,14 @@ export class User {
 		this.email =  email;
 	}
 	public setMobile(mobile) {
-		this.mobile = mobile;
+		this.phone = mobile;
 	}
 	public setAddress(address) {
-		this.address = address;
+		/*
+		address being an object with 
+		keys = building, street, city, state, zipcode, coordinates
+		*/
+		this.address = address;                             
 	}
 	public setAvatarUrl(avatarUrl) {
 		this.avatarUrl = avatarUrl;
