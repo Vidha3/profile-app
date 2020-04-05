@@ -9,8 +9,12 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Project Overview
 
 - The landing page is a user profile form, which takes in details such as name, address, phone, email, etc.
+
+![Form Page](form_page.png)
 - On filling it up and submitting, it goes to the profile page 
 - Profile page displays all the details such as name, address, email, and displays a map for the address.
+
+![Profile Page](profile_page.png)
 - Other details such as the Avatar (display picture) and the bio are extracted from a user service. 
 - The map can be moved around and controlled through the mouse. Zoom in and zoom out are made possible through +/- buttons, scrolling and touch.
 - To move the address pin and update the user's address, simply double click on the desired location.
