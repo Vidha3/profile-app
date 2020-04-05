@@ -16,8 +16,8 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ![Profile Page](profile_page.png)
 - Other details such as the Avatar (display picture) and the bio are extracted from a user service. 
-- The map can be moved around and controlled through the mouse. Zoom in and zoom out are made possible through +/- buttons, scrolling and touch.
-- To move the address pin and update the user's address, simply double click on the desired location.
+- The map can be moved around and controlled through the mouse. Zoom in and zoom out are made possible through +/- buttons, pinch and touch.
+- To move the address pin and update the user's address, simply double click on the desired location on the map.
 
 ### External APIs and libraries
 
