@@ -18,7 +18,7 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ### External APIs and libraries
 
 - Maps used: OpenLayers 6
-- Geocoding and reverse-geocodin: HERE API (version 3.1)
+- Geocoding and reverse-geocoding: HERE API (version 3.1)
 
 ## Code scaffolding
 
